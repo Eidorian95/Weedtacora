@@ -31,21 +31,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-
-//        lifecycleScope.launchWhenCreated {
-//            val growth = Growth(initialDate = "today", notes = "sin notas", name = "mi cultivo")
-//            repo.insertGrowth(growth)
-//            val growth2 = Growth(initialDate = "toda2y", notes = "sin notas2", name = "mi cultivo2")
-//            repo.insertGrowth(growth2)
-//            val growth3 = Growth(initialDate = "today3", notes = "sin notas3", name = "mi cultivo3")
-//            repo.insertGrowth(growth3)
-//            val growth4 = Growth(initialDate = "today4", notes = "sin notas4", name = "mi cultivo4")
-//            repo.insertGrowth(growth4)
-//
-//
-//            val growths = repo.getAllGrowths()
-//            Log.d("GROWTHS", "${growths.count()} ${growths.toString()}")
-//        }
     }
 }
 
