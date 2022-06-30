@@ -2,9 +2,10 @@ package com.eidorian.weedtacora.bussinesslogic.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.eidorian.weedtacora.bussinesslogic.usecase.GetAllGrowthsUseCase
+import com.eidorian.weedtacora.bussinesslogic.usecase.CreateGrowthUseCase
 import com.eidorian.weedtacora.data.entities.Growth
 import com.eidorian.weedtacora.di.IoDispatcher
+import com.eidorian.weedtacora.presentation.events.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.BufferOverflow
@@ -14,19 +15,21 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class GrowthViewModel @Inject constructor(
-    private val useCase: GetAllGrowthsUseCase,
+class CreatorViewModel @Inject constructor(
+    private val useCase: CreateGrowthUseCase,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val _userGrowths = MutableSharedFlow<List<Growth>>(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
-    val userGrowths: Flow<List<Growth>>
-        get() = _userGrowths
+    private val _uiEvents = MutableSharedFlow<UiEvent>(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    val uiEvents: Flow<UiEvent>
+        get() = _uiEvents
 
-    init {
+    fun onCreateNewGrowth(name: String, date: String, description: String) {
         viewModelScope.launch(context = dispatcher) {
-            val result = useCase.invoke()
-            _userGrowths.emit(result)
+            when (useCase(Growth(name = name, initialDate = date, notes = description))) {
+                true -> _uiEvents.emit(UiEvent.Success)
+                else -> _uiEvents.emit(UiEvent.Failure)
+            }
         }
     }
 

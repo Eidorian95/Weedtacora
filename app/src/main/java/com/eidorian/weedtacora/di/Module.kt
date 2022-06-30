@@ -2,6 +2,8 @@ package com.eidorian.weedtacora.di
 
 import android.content.Context
 import androidx.room.Room
+import com.eidorian.weedtacora.bussinesslogic.usecase.CreateGrowthUseCase
+import com.eidorian.weedtacora.bussinesslogic.usecase.CreateGrowthUseCaseImpl
 import com.eidorian.weedtacora.bussinesslogic.usecase.GetAllGrowthsUseCase
 import com.eidorian.weedtacora.bussinesslogic.usecase.GetAllGrowthsUseCaseImpl
 import com.eidorian.weedtacora.data.dao.GrowthDao
@@ -54,4 +56,7 @@ abstract class BindsModule {
 
     @Binds
     abstract fun providesGetGrowthUseCase(useCase: GetAllGrowthsUseCaseImpl): GetAllGrowthsUseCase
+
+    @Binds
+    abstract fun providesCreateGrowthUseCase(useCase: CreateGrowthUseCaseImpl): CreateGrowthUseCase
 }
