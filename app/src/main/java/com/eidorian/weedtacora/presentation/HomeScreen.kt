@@ -29,7 +29,9 @@ fun HomeScreen(navController: NavController) {
             GrowthsList()
         }
         Row {
-            Footer(navController, Screen.CreateGrowthScreen, "Nuevo cultivo")
+            Footer("Nuevo cultivo"){
+                navController.navigate(Screen.CreateGrowthScreen.route)
+            }
         }
     }
 

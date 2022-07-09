@@ -15,7 +15,7 @@ fun Navigation() {
             HomeScreen(navController = navController)
         }
         composable(route = Screen.CreateGrowthScreen.route) {
-            CreateGrowthScreen(navController = navController)
+            CreateGrowthScreen()
         }
     }
 }

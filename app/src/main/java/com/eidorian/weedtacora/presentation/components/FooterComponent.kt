@@ -13,14 +13,14 @@ import com.eidorian.weedtacora.presentation.navigation.Screen
 
 
 @Composable
-fun Footer(navController: NavController, navigateTo:Screen, buttonText: String) {
+fun Footer(buttonText: String, onClick:()->Unit) {
     Button(
         modifier = Modifier
             .fillMaxWidth()
             .height(64.dp),
         shape = RectangleShape,
         onClick = {
-            navController.navigate(navigateTo.route)
+           onClick()
         },
     ) {
         Text(text = buttonText)
