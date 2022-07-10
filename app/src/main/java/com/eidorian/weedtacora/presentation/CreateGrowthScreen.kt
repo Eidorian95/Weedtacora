@@ -33,6 +33,7 @@ import java.util.*
 
 @Composable
 fun CreateGrowthScreen(
+    viewModel: CreatorViewModel = viewModel()
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -47,7 +48,9 @@ fun CreateGrowthScreen(
             ColumnForm()
         }
         Row {
-            Footer("Agregar") {}
+            Footer("Agregar") {
+                viewModel.onCreateNewGrowth("1 cultivo test", "10/07/2022","1 descripcion del cultivo")
+            }
         }
     }
 }

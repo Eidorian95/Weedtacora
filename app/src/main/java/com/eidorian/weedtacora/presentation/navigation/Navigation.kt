@@ -1,9 +1,11 @@
 package com.eidorian.weedtacora.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.eidorian.weedtacora.bussinesslogic.viewmodel.CreatorViewModel
 import com.eidorian.weedtacora.presentation.CreateGrowthScreen
 import com.eidorian.weedtacora.presentation.HomeScreen
 
@@ -15,7 +17,8 @@ fun Navigation() {
             HomeScreen(navController = navController)
         }
         composable(route = Screen.CreateGrowthScreen.route) {
-            CreateGrowthScreen()
+            val viewModel = hiltViewModel<CreatorViewModel>()
+            CreateGrowthScreen(viewModel)
         }
     }
 }
