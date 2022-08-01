@@ -5,6 +5,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.eidorian.weedtacora.bussinesslogic.usecase.CreateGrowthUseCase
 import com.eidorian.weedtacora.data.entities.Growth
 import com.eidorian.weedtacora.presentation.events.UiEvent
+import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.mockk
 import junit.framework.Assert.assertEquals
@@ -17,7 +18,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class CreatorViewModelTest {
+class FormViewModelTest {
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -25,19 +26,22 @@ class CreatorViewModelTest {
     @get:Rule
     val coroutinesTestRule = CoroutinesTestRule()
 
-    private lateinit var viewModel: CreatorViewModel
+    private lateinit var viewModel: FormViewModel
 
     private lateinit var useCase: CreateGrowthUseCase
 
     @Before
     fun setup() {
         useCase = mockk()
-        viewModel = CreatorViewModel(useCase, Dispatchers.Main)
+        viewModel = FormViewModel(useCase, Dispatchers.Main)
+        viewModel.name = "cultivo test 1"
+        viewModel.description = "nuevo cultivo test"
+        viewModel.date = "15/03/1995"
     }
 
     @After
     fun tearDown() {
-
+        clearAllMocks()
     }
 
 
@@ -45,7 +49,7 @@ class CreatorViewModelTest {
     fun `create a new growth successfully`() {
         givenUseCase(true)
 
-        viewModel.onCreateNewGrowth("Primer cultivo", "15/03/1995", "sin notas")
+        viewModel.onCreateNewGrowth()
 
         coroutinesTestRule.runBlockingTest {
             assertEquals(UiEvent.Success, viewModel.uiEvents.first())
@@ -56,7 +60,7 @@ class CreatorViewModelTest {
     fun `create a new growth failed`() {
         givenUseCase(false)
 
-        viewModel.onCreateNewGrowth("Primer cultivo", "15/03/1995", "sin notas")
+        viewModel.onCreateNewGrowth()
 
         coroutinesTestRule.runBlockingTest {
             assertEquals(UiEvent.Failure, viewModel.uiEvents.first())
@@ -64,6 +68,8 @@ class CreatorViewModelTest {
     }
 
     private fun givenUseCase(isSuccessfully: Boolean) {
-        coEvery { useCase(Growth(initialDate = "15/03/1995", notes = "sin notas", name = "Primer cultivo")) } returns isSuccessfully
+        coEvery {
+            useCase(any())
+        } returns isSuccessfully
     }
 }

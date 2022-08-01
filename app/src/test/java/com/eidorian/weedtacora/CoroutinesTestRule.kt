@@ -20,6 +20,6 @@ class CoroutinesTestRule(
         testDispatcher.cleanupTestCoroutines()
     }
 
-    fun runBlockingTest(block: suspend TestCoroutineScope.()->Unit) =
+    fun runBlockingTest(block: suspend TestCoroutineScope.() -> Unit) =
         testDispatcher.runBlockingTest(block)
 }

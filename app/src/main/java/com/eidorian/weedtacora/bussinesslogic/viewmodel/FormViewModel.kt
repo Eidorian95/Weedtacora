@@ -1,5 +1,9 @@
 package com.eidorian.weedtacora.bussinesslogic.viewmodel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.eidorian.weedtacora.bussinesslogic.usecase.CreateGrowthUseCase
@@ -15,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CreatorViewModel @Inject constructor(
+class FormViewModel @Inject constructor(
     private val useCase: CreateGrowthUseCase,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
@@ -24,13 +28,24 @@ class CreatorViewModel @Inject constructor(
     val uiEvents: Flow<UiEvent>
         get() = _uiEvents
 
-    fun onCreateNewGrowth(name: String, date: String, description: String) {
+    var name by mutableStateOf("")
+    var date by mutableStateOf("")
+    var description by mutableStateOf("")
+
+
+    fun onCreateNewGrowth() {
         viewModelScope.launch(context = dispatcher) {
-            when (useCase(Growth(name = name, initialDate = date, notes = description))) {
+            when (useCase(buildGrowth())) {
                 true -> _uiEvents.emit(UiEvent.Success)
                 else -> _uiEvents.emit(UiEvent.Failure)
             }
         }
     }
+
+    private fun buildGrowth() = Growth(
+        name = name,
+        initialDate = date,
+        notes = description
+    )
 
 }

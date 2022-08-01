@@ -2,38 +2,35 @@ package com.eidorian.weedtacora.presentation
 
 import android.app.DatePickerDialog
 import android.widget.DatePicker
-import android.widget.Space
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.eidorian.weedtacora.bussinesslogic.viewmodel.CreatorViewModel
+import com.eidorian.weedtacora.bussinesslogic.viewmodel.FormViewModel
 import com.eidorian.weedtacora.presentation.components.Footer
-import com.eidorian.weedtacora.presentation.navigation.Screen
 import com.eidorian.weedtacora.ui.theme.WeedtacoraTheme
 import java.util.*
 
 @Composable
 fun CreateGrowthScreen(
-    viewModel: CreatorViewModel = viewModel()
+    viewModel: FormViewModel = viewModel()
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -45,42 +42,39 @@ fun CreateGrowthScreen(
                 .padding(top = 16.dp)
                 .weight(1f)
         ) {
-            ColumnForm()
+            Column(modifier = Modifier.padding(16.dp)) {
+                TextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = viewModel.name,
+                    onValueChange = { viewModel.name = it },
+                    placeholder = { Text(text = "Nombre") }
+                )
+                Spacer(modifier = Modifier.padding(vertical = 16.dp))
+
+                DatePicker { viewModel.date = it }
+
+                Spacer(modifier = Modifier.padding(vertical = 16.dp))
+
+                TextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(112.dp),
+                    value = viewModel.description,
+                    onValueChange = { viewModel.description = it },
+                    placeholder = { Text(text = "Descripción") }
+                )
+            }
         }
         Row {
             Footer("Agregar") {
-                viewModel.onCreateNewGrowth("2 cultivo test", "10/07/2022","2 descripcion del cultivo")
+                viewModel.onCreateNewGrowth()
             }
         }
     }
 }
 
 @Composable
-private fun ColumnForm() {
-    Column(modifier = Modifier.padding(16.dp)) {
-        TextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = "",
-            onValueChange = {},
-            placeholder = { Text(text = "Nombre") }
-        )
-        Spacer(modifier = Modifier.padding(vertical = 16.dp))
-        DatePicker()
-        Spacer(modifier = Modifier.padding(vertical = 16.dp))
-
-        TextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(112.dp),
-            value = "",
-            onValueChange = {},
-            placeholder = { Text(text = "Descripción") }
-        )
-    }
-}
-
-@Composable
-private fun DatePicker() {
+private fun DatePicker(onSelectedDate: (String) -> Unit) {
     val mContext = LocalContext.current
 
     val mYear: Int
@@ -101,6 +95,7 @@ private fun DatePicker() {
         mContext,
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
             mDate.value = "$mDayOfMonth/${mMonth + 1}/$mYear"
+            onSelectedDate(mDate.value)
         }, mYear, mMonth, mDay
     )
 
@@ -129,6 +124,11 @@ private fun DatePicker() {
 @Composable
 private fun DefaultPreview() {
     WeedtacoraTheme {
-        CreateGrowthScreen()
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colors.background
+        ){
+            CreateGrowthScreen()
+        }
     }
 }
