@@ -24,6 +24,10 @@ class GrowthViewModel @Inject constructor(
         get() = _userGrowths
 
     init {
+        fetchUserGrowths()
+    }
+
+    fun fetchUserGrowths() {
         viewModelScope.launch(context = dispatcher) {
             val result = useCase.invoke()
             _userGrowths.emit(result)

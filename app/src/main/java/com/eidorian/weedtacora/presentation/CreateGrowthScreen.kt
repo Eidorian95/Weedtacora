@@ -49,7 +49,7 @@ fun CreateGrowthScreen(
         }
         Row {
             Footer("Agregar") {
-                viewModel.onCreateNewGrowth("1 cultivo test", "10/07/2022","1 descripcion del cultivo")
+                viewModel.onCreateNewGrowth("2 cultivo test", "10/07/2022","2 descripcion del cultivo")
             }
         }
     }
