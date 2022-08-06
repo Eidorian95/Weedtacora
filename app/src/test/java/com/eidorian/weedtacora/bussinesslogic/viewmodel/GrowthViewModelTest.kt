@@ -1,21 +1,15 @@
-package com.eidorian.weedtacora.presentation
+package com.eidorian.weedtacora.bussinesslogic.viewmodel
 
 import CoroutinesTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.eidorian.weedtacora.bussinesslogic.usecase.GetAllGrowthsUseCase
-import com.eidorian.weedtacora.bussinesslogic.viewmodel.GrowthViewModel
 import com.eidorian.weedtacora.data.entities.Growth
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
-
+import org.junit.*
 
 @ExperimentalCoroutinesApi
 class GrowthViewModelTest {
@@ -49,7 +43,7 @@ class GrowthViewModelTest {
 
         //entonces la lista es
         coroutinesTestRule.runBlockingTest {
-            assertEquals(emptyList<Growth>(), viewModel.userGrowths.first())
+            Assert.assertEquals(emptyList<Growth>(), viewModel.userGrowths.first())
         }
     }
 
@@ -63,7 +57,7 @@ class GrowthViewModelTest {
 
         //entonces la lista es
         coroutinesTestRule.runBlockingTest {
-            assertEquals(listOf(BASE_GROWTH), viewModel.userGrowths.first())
+            Assert.assertEquals(listOf(BASE_GROWTH), viewModel.userGrowths.first())
         }
     }
 
