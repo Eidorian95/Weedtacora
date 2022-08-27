@@ -6,8 +6,10 @@ import com.eidorian.weedtacora.bussinesslogic.usecase.CreateBinnacleUseCase
 import com.eidorian.weedtacora.bussinesslogic.usecase.CreateGrowthUseCase
 import com.eidorian.weedtacora.bussinesslogic.usecase.impl.CreateGrowthUseCaseImpl
 import com.eidorian.weedtacora.bussinesslogic.usecase.GetAllGrowthsUseCase
+import com.eidorian.weedtacora.bussinesslogic.usecase.GetGrowthDetailsUseCase
 import com.eidorian.weedtacora.bussinesslogic.usecase.impl.CreateBinnacleUseCaseImpl
 import com.eidorian.weedtacora.bussinesslogic.usecase.impl.GetAllGrowthsUseCaseImpl
+import com.eidorian.weedtacora.bussinesslogic.usecase.impl.GetGrowthDetailsUseCaseImpl
 import com.eidorian.weedtacora.data.dao.GrowthDao
 import com.eidorian.weedtacora.data.database.AppDatabase
 import com.eidorian.weedtacora.data.repository.BinnacleRepository
@@ -69,4 +71,7 @@ abstract class BindsModule {
 
     @Binds
     abstract fun providesCreateBinnacleUseCase(useCase: CreateBinnacleUseCaseImpl): CreateBinnacleUseCase
+
+    @Binds
+    abstract fun providesGetGrowthDetailsUseCase(useCase: GetGrowthDetailsUseCaseImpl): GetGrowthDetailsUseCase
 }

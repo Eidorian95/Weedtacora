@@ -16,4 +16,8 @@ class BinnacleRepositoryImpl @Inject constructor(
     override suspend fun getAllBinnacles(): List<GrowthWithBinnacle> {
         return growthDao.getAllBinnacles()
     }
+
+    override suspend fun getGrowthDetails(growthId: Int): List<Binnacle> {
+        return growthDao.getGrowthDetails(growthId)
+    }
 }
