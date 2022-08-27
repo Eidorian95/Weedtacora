@@ -1,7 +1,8 @@
-package com.eidorian.weedtacora.data.repository
+package com.eidorian.weedtacora.data.repository.impl
 
 import com.eidorian.weedtacora.data.dao.GrowthDao
 import com.eidorian.weedtacora.data.entities.Growth
+import com.eidorian.weedtacora.data.repository.GrowthRepository
 import javax.inject.Inject
 
 class GrowthRepositoryImpl @Inject constructor(

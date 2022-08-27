@@ -1,6 +1,7 @@
 package com.eidorian.weedtacora.data.dao
 
 import androidx.room.*
+import com.eidorian.weedtacora.data.entities.Binnacle
 import com.eidorian.weedtacora.data.entities.Growth
 import com.eidorian.weedtacora.data.entities.GrowthWithBinnacle
 
@@ -14,8 +15,10 @@ interface GrowthDao {
     @Query("SELECT * FROM growth ORDER BY initial_date ASC")
     fun getAllGrowths(): List<Growth>
 
-    @Transaction
-    @Query("SELECT * FROM growth")
-    fun getAllBinnacles(): List<GrowthWithBinnacle>
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertBinnacle(binnacle: Binnacle): Long
 
+    @Transaction
+    @Query("SELECT * FROM growth ORDER BY initial_date ASC")
+    fun getAllBinnacles(): List<GrowthWithBinnacle>
 }

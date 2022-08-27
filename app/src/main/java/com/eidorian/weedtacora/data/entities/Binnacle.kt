@@ -14,6 +14,7 @@ data class Binnacle(
     val binnacleId: Int = 0,
     @ColumnInfo(name = "fk_growth_id")
     val fkGrowthId: Int,
+    @ColumnInfo(name = "date")
     val date: String,
     val observation: String,
     val stage: String
@@ -22,6 +23,6 @@ data class Binnacle(
 data class BinnacleWithPhoto(
     @Embedded
     val binnacle: Binnacle,
-    @Relation(parentColumn = "binnacle_id", entityColumn = "fk_binnacle_id")
+    @Relation(parentColumn = "binnacle_id", entityColumn = "fk_binnacle_id", entity = Photo::class)
     val photos: List<Photo>
 )

@@ -16,6 +16,6 @@ data class Growth(
 data class GrowthWithBinnacle(
     @Embedded
     val growth: Growth,
-    @Relation(parentColumn = "growth_id", entityColumn = "fk_growth_id")
+    @Relation(parentColumn = "growth_id", entityColumn = "fk_growth_id", entity = Binnacle::class)
     val binnacle: List<Binnacle>
 )
