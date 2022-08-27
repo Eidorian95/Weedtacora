@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.eidorian.weedtacora.bussinesslogic.usecase.CreateGrowthUseCase
-import com.eidorian.weedtacora.data.entities.Growth
+import com.eidorian.weedtacora.bussinesslogic.usecase.CreateBinnacleUseCase
+import com.eidorian.weedtacora.data.entities.Binnacle
 import com.eidorian.weedtacora.di.IoDispatcher
 import com.eidorian.weedtacora.presentation.events.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,8 +18,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FormViewModel @Inject constructor(
-    private val createGrowth: CreateGrowthUseCase,
+class BinnacleFormViewModel @Inject constructor(
+    private val useCase: CreateBinnacleUseCase,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -27,24 +27,24 @@ class FormViewModel @Inject constructor(
     val uiEvents: Flow<UiState>
         get() = _uiEvents
 
-    var name by mutableStateOf("")
     var date by mutableStateOf("")
-    var description by mutableStateOf("")
+    var stage by mutableStateOf("")
+    var observation by mutableStateOf("")
 
 
-    fun onCreateNewGrowth() {
+    fun onCreateNewBinnacle(growthId: Int) {
         viewModelScope.launch(context = dispatcher) {
-            when (createGrowth(buildGrowth())) {
+            when (useCase(buildBinnacle(growthId))) {
                 true -> _uiEvents.emit(UiState.Success)
                 else -> _uiEvents.emit(UiState.Failure)
             }
         }
     }
 
-    private fun buildGrowth() = Growth(
-        name = name,
-        initialDate = date,
-        notes = description
+    private fun buildBinnacle(growthId: Int) = Binnacle(
+        date = date,
+        observation = observation,
+        stage = stage,
+        fkGrowthId = growthId,
     )
-
 }

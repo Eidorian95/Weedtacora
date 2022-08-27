@@ -2,14 +2,18 @@ package com.eidorian.weedtacora.di
 
 import android.content.Context
 import androidx.room.Room
+import com.eidorian.weedtacora.bussinesslogic.usecase.CreateBinnacleUseCase
 import com.eidorian.weedtacora.bussinesslogic.usecase.CreateGrowthUseCase
-import com.eidorian.weedtacora.bussinesslogic.usecase.CreateGrowthUseCaseImpl
+import com.eidorian.weedtacora.bussinesslogic.usecase.impl.CreateGrowthUseCaseImpl
 import com.eidorian.weedtacora.bussinesslogic.usecase.GetAllGrowthsUseCase
-import com.eidorian.weedtacora.bussinesslogic.usecase.GetAllGrowthsUseCaseImpl
+import com.eidorian.weedtacora.bussinesslogic.usecase.impl.CreateBinnacleUseCaseImpl
+import com.eidorian.weedtacora.bussinesslogic.usecase.impl.GetAllGrowthsUseCaseImpl
 import com.eidorian.weedtacora.data.dao.GrowthDao
 import com.eidorian.weedtacora.data.database.AppDatabase
+import com.eidorian.weedtacora.data.repository.BinnacleRepository
 import com.eidorian.weedtacora.data.repository.GrowthRepository
-import com.eidorian.weedtacora.data.repository.GrowthRepositoryImpl
+import com.eidorian.weedtacora.data.repository.impl.BinnacleRepositoryImpl
+import com.eidorian.weedtacora.data.repository.impl.GrowthRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -55,8 +59,14 @@ abstract class BindsModule {
     abstract fun providesRepository(repository: GrowthRepositoryImpl): GrowthRepository
 
     @Binds
+    abstract fun providesBinnacleRepository(repository: BinnacleRepositoryImpl): BinnacleRepository
+
+    @Binds
     abstract fun providesGetGrowthUseCase(useCase: GetAllGrowthsUseCaseImpl): GetAllGrowthsUseCase
 
     @Binds
     abstract fun providesCreateGrowthUseCase(useCase: CreateGrowthUseCaseImpl): CreateGrowthUseCase
+
+    @Binds
+    abstract fun providesCreateBinnacleUseCase(useCase: CreateBinnacleUseCaseImpl): CreateBinnacleUseCase
 }

@@ -5,8 +5,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.eidorian.weedtacora.bussinesslogic.viewmodel.BinnacleFormViewModel
 import com.eidorian.weedtacora.bussinesslogic.viewmodel.FormViewModel
 import com.eidorian.weedtacora.bussinesslogic.viewmodel.GrowthViewModel
+import com.eidorian.weedtacora.presentation.CreateBinnacleScreen
 import com.eidorian.weedtacora.presentation.CreateGrowthScreen
 import com.eidorian.weedtacora.presentation.HomeScreen
 
@@ -21,6 +23,10 @@ fun Navigation() {
         composable(route = Screen.CreateGrowthScreen.route) {
             val viewModel = hiltViewModel<FormViewModel>()
             CreateGrowthScreen(viewModel = viewModel)
+        }
+        composable(route = Screen.CreateBinnacleScreen.route) {
+            val viewModel = hiltViewModel<BinnacleFormViewModel>()
+            CreateBinnacleScreen(viewModel = viewModel, 0)
         }
     }
 }
