@@ -8,6 +8,7 @@ import com.eidorian.weedtacora.bussinesslogic.usecase.GetAllGrowthsUseCase
 import com.eidorian.weedtacora.bussinesslogic.usecase.GetGrowthDetailsUseCase
 import com.eidorian.weedtacora.data.entities.Binnacle
 import com.eidorian.weedtacora.data.entities.Growth
+import com.eidorian.weedtacora.data.entities.GrowthWithBinnacle
 import com.eidorian.weedtacora.di.IoDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -23,8 +24,8 @@ class GrowthDetailViewModel @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val _growthDetails = MutableLiveData<List<Binnacle>>()
-    val growthDetails: LiveData<List<Binnacle>>
+    private val _growthDetails = MutableLiveData<List<GrowthWithBinnacle>>()
+    val growthDetails: LiveData<List<GrowthWithBinnacle>>
         get() = _growthDetails
 
     fun fetchGrowthDetails(growthId: Int) {

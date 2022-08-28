@@ -10,7 +10,7 @@ import javax.inject.Inject
 class GetGrowthDetailsUseCaseImpl @Inject constructor(
     private val repository: BinnacleRepository
 ) : GetGrowthDetailsUseCase {
-    override suspend fun invoke(growthId: Int): List<Binnacle> {
-        return repository.getGrowthDetails(growthId)
+    override suspend fun invoke(growthId: Int): List<GrowthWithBinnacle> {
+        return repository.getAllBinnacles()
     }
 }

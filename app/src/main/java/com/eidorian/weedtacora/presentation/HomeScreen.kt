@@ -1,13 +1,17 @@
 package com.eidorian.weedtacora.presentation
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,7 +30,7 @@ import com.eidorian.weedtacora.ui.theme.WeedtacoraTheme
 @Composable
 fun HomeScreen(
     navController: NavController,
-    viewModel: GrowthViewModel = viewModel()
+    viewModel: GrowthViewModel
 ) {
     val lifecycleEvent = rememberLifecycleEvent()
     val growthList = viewModel.userGrowths
@@ -47,7 +51,9 @@ fun HomeScreen(
                 .fillMaxWidth()
                 .weight(1f)
         ) {
-            GrowthsList(growthList.collectAsState(initial = emptyList()).value)
+            GrowthsList(growthList.collectAsState(initial = emptyList()).value){
+                navController.navigate(Screen.GrowthDetailsScreen.route)
+            }
         }
         Row {
             Footer("Nuevo cultivo") {
@@ -59,26 +65,14 @@ fun HomeScreen(
 }
 
 @Composable
-fun GrowthsList(growthItems: List<Growth>) {
+fun GrowthsList(growthItems: List<Growth>, onClick: () -> Unit) {
     LazyColumn {
         items(
             items = growthItems,
             key = { item: Growth -> item.growthId }
         ) {
-            Column {
-                Text(
-                    "Cultivo: ${it.name} - ${it.initialDate}",
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
-                )
-                Text(
-                    "Decripción: ${it.notes}",
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                )
-                Divider()
+            GrowthCard(growth = it) {
+                onClick()
             }
         }
     }
@@ -100,10 +94,59 @@ fun rememberLifecycleEvent(lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.
     return state
 }
 
-@Preview(showBackground = true)
+@Composable
+fun GrowthCard(growth: Growth, onClick: () -> Unit) {
+
+    Card(
+        modifier = Modifier
+            .padding(8.dp)
+            .clickable { onClick() },
+        border = BorderStroke(width = 2.dp, Color.Magenta),
+        elevation = 6.dp
+    ) {
+        Column(modifier = Modifier.padding(8.dp)) {
+            Text(
+                "Cultivo: ${growth.name}",
+                Modifier
+                    .fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.padding(vertical = 4.dp))
+
+            Text(
+                "Fecha: ${growth.initialDate}",
+                Modifier
+                    .fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.padding(vertical = 4.dp))
+
+            Text(
+                "Decripción: ${growth.notes}",
+                Modifier
+                    .fillMaxWidth()
+            )
+        }
+    }
+}
+
+/*@Preview(showBackground = true)
 @Composable
 private fun DefaultPreview() {
     WeedtacoraTheme {
         HomeScreen(rememberNavController(), viewModel())
     }
+}*/
+
+@Preview(showBackground = true, name = "growth card")
+@Composable
+private fun GrowthCardPreview() {
+    GrowthCard(
+        growth = Growth(
+            0,
+            "15/03/1995",
+            "sin notas",
+            "cultivo prueba"
+        ),
+        onClick = { }
+    )
 }
