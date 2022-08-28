@@ -1,5 +1,6 @@
 package com.eidorian.weedtacora.presentation
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -38,6 +39,7 @@ fun HomeScreen(
     LaunchedEffect(lifecycleEvent) {
         if (lifecycleEvent == Lifecycle.Event.ON_RESUME) {
             viewModel.fetchUserGrowths()
+            Log.d("LaunchedEffect", "viewModel.fetchUserGrowths()")
         }
     }
 

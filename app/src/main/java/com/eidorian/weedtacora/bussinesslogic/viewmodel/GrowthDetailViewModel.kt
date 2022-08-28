@@ -24,14 +24,14 @@ class GrowthDetailViewModel @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val _growthDetails = MutableLiveData<List<GrowthWithBinnacle>>()
-    val growthDetails: LiveData<List<GrowthWithBinnacle>>
+    private val _growthDetails = MutableSharedFlow<List<Binnacle>>()
+    val growthDetails: Flow<List<Binnacle>>
         get() = _growthDetails
 
     fun fetchGrowthDetails(growthId: Int) {
         viewModelScope.launch(context = dispatcher) {
             val result = useCase.invoke(growthId)
-            _growthDetails.postValue(result)
+            _growthDetails.emit(result)
         }
     }
 
