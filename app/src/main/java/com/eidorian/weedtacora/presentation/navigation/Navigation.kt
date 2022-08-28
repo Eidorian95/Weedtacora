@@ -2,9 +2,11 @@ package com.eidorian.weedtacora.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.eidorian.weedtacora.bussinesslogic.viewmodel.BinnacleFormViewModel
 import com.eidorian.weedtacora.bussinesslogic.viewmodel.FormViewModel
 import com.eidorian.weedtacora.bussinesslogic.viewmodel.GrowthDetailViewModel
@@ -28,14 +30,22 @@ fun Navigation() {
             CreateGrowthScreen(viewModel = viewModel)
         }
 
-        composable(route = Screen.CreateBinnacleScreen.route) {
-            val viewModel = hiltViewModel<BinnacleFormViewModel>()
-            CreateBinnacleScreen(viewModel = viewModel, 0)
+        composable(route = Screen.GrowthDetailsScreen.route.plus("/{growth_id}"),
+            arguments = listOf(navArgument("growth_id") { type = NavType.IntType })
+        ) {
+            val growthId = it.arguments?.getInt("growth_id") ?: 0
+            val viewModel = hiltViewModel<GrowthDetailViewModel>()
+            GrowthDetailsScreen(navController = navController, viewModel = viewModel, growthId = growthId)
         }
 
-        composable(route = Screen.GrowthDetailsScreen.route) {
-            val viewModel = hiltViewModel<GrowthDetailViewModel>()
-            GrowthDetailsScreen(navController = navController, viewModel = viewModel)
+        composable(
+            route = Screen.CreateBinnacleScreen.route.plus("/{growth_id}"),
+            arguments = listOf(navArgument("growth_id") { type = NavType.IntType })
+        ) {
+            val growthId = it.arguments?.getInt("growth_id") ?: 0
+            val viewModel = hiltViewModel<BinnacleFormViewModel>()
+            CreateBinnacleScreen(viewModel = viewModel, growthId = growthId)
         }
+
     }
 }

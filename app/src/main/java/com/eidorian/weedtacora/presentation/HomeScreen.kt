@@ -54,7 +54,7 @@ fun HomeScreen(
                 .weight(1f)
         ) {
             GrowthsList(growthList.collectAsState(initial = emptyList()).value){
-                navController.navigate(Screen.GrowthDetailsScreen.route)
+                navController.navigate(Screen.GrowthDetailsScreen.route.plus("/$it"))
             }
         }
         Row {
@@ -67,14 +67,14 @@ fun HomeScreen(
 }
 
 @Composable
-fun GrowthsList(growthItems: List<Growth>, onClick: () -> Unit) {
+fun GrowthsList(growthItems: List<Growth>, onClick: (Int) -> Unit) {
     LazyColumn {
         items(
             items = growthItems,
             key = { item: Growth -> item.growthId }
         ) {
             GrowthCard(growth = it) {
-                onClick()
+                onClick(it.growthId)
             }
         }
     }

@@ -34,13 +34,14 @@ import com.eidorian.weedtacora.ui.theme.WeedtacoraTheme
 @Composable
 fun GrowthDetailsScreen(
     navController: NavController,
-    viewModel: GrowthDetailViewModel
+    viewModel: GrowthDetailViewModel,
+    growthId:Int
 ) {
 
     val details = viewModel.growthDetails.collectAsStateWithLifecycle(initialValue = emptyList())
 
     LaunchedEffect(Unit) {
-        viewModel.fetchGrowthDetails(1)
+        viewModel.fetchGrowthDetails(growthId)
         Log.d("LaunchedEffect", "viewModel.fetchGrowthDetails(1)")
     }
 
@@ -60,7 +61,7 @@ fun GrowthDetailsScreen(
         }
         Row {
             Footer("Informar") {
-                navController.navigate(Screen.CreateBinnacleScreen.route)
+                navController.navigate(Screen.CreateBinnacleScreen.route.plus("/$growthId"))
             }
         }
     }
