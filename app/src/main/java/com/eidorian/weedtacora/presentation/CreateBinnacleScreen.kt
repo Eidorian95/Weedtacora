@@ -1,5 +1,6 @@
 package com.eidorian.weedtacora.presentation
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -60,7 +61,7 @@ fun CreateBinnacleScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(112.dp),
-                    value = "",
+                    value = viewModel.observation,
                     onValueChange = { viewModel.observation = it },
                     placeholder = { Text(text = "Observaciones") }
                 )
@@ -71,7 +72,8 @@ fun CreateBinnacleScreen(
         }
         Row {
             Footer("Agregar") {
-                viewModel.onCreateNewBinnacle(growthId)
+                viewModel.onCreateNewBinnacle(1)
+                Log.d("LaunchedEffect", "viewModel.onCreateNewBinnacle(1)")
             }
         }
     }

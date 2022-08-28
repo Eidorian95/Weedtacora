@@ -21,4 +21,8 @@ interface GrowthDao {
     @Transaction
     @Query("SELECT * FROM growth ORDER BY initial_date ASC")
     fun getAllBinnacles(): List<GrowthWithBinnacle>
+
+    @Transaction
+    @Query("SELECT * FROM Binnacle WHERE fk_growth_id = :growthId")
+    fun getGrowthDetails(growthId:Int): List<Binnacle>
 }
