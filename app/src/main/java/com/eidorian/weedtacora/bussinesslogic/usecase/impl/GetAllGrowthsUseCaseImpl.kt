@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetAllGrowthsUseCaseImpl @Inject constructor(
     private val repository: GrowthRepository
 ) : GetAllGrowthsUseCase {
-    override suspend fun invoke(): List<Growth> {
+    override suspend operator fun invoke(): List<Growth> {
         return repository.getAllGrowths()
     }
 }

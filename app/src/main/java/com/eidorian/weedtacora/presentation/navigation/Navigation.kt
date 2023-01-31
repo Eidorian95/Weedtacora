@@ -16,14 +16,17 @@ import com.eidorian.weedtacora.presentation.HomeScreen
 fun Navigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.HomeScreen.route) {
+
         composable(route = Screen.HomeScreen.route) {
             val viewModel = hiltViewModel<GrowthViewModel>()
             HomeScreen(navController = navController, viewModel = viewModel)
         }
+
         composable(route = Screen.CreateGrowthScreen.route) {
             val viewModel = hiltViewModel<FormViewModel>()
             CreateGrowthScreen(viewModel = viewModel)
         }
+
         composable(route = Screen.CreateBinnacleScreen.route) {
             val viewModel = hiltViewModel<BinnacleFormViewModel>()
             CreateBinnacleScreen(viewModel = viewModel, 0)

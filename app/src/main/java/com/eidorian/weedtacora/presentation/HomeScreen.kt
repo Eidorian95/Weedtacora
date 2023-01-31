@@ -65,22 +65,28 @@ fun GrowthsList(growthItems: List<Growth>) {
             items = growthItems,
             key = { item: Growth -> item.growthId }
         ) {
-            Column {
-                Text(
-                    "Cultivo: ${it.name} - ${it.initialDate}",
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
-                )
-                Text(
-                    "Decripción: ${it.notes}",
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                )
-                Divider()
-            }
+
         }
+    }
+}
+
+
+@Composable
+fun GrowthItem(item:Growth){
+    Column {
+        Text(
+            "Cultivo: ${item.name} - ${item.initialDate}",
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp)
+        )
+        Text(
+            "Decripción: ${item.notes}",
+            Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        )
+        Divider()
     }
 }
 
@@ -104,6 +110,8 @@ fun rememberLifecycleEvent(lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.
 @Composable
 private fun DefaultPreview() {
     WeedtacoraTheme {
-        HomeScreen(rememberNavController(), viewModel())
+        GrowthItem(item = Growth(
+            0,"15/03/1995", "notas iniciales","The Flower"
+        ))
     }
 }

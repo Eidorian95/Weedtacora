@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GrowthViewModel @Inject constructor(
-    private val useCase: GetAllGrowthsUseCase,
+    private val getAllGrowths: GetAllGrowthsUseCase,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -29,7 +29,7 @@ class GrowthViewModel @Inject constructor(
 
     fun fetchUserGrowths() {
         viewModelScope.launch(context = dispatcher) {
-            val result = useCase.invoke()
+            val result = getAllGrowths()
             _userGrowths.emit(result)
         }
     }
