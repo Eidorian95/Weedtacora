@@ -24,11 +24,11 @@ class GrowthRepositoryImplTest {
     @Test
     fun `get growth from dao to entity model`(){
         runTest {
-            coEvery { dao.getAllGrowths() } returns listOf(GrowthDTO(growthId = 0, initialDate = "15/15/1995", notes = "na", name = "name"))
+            coEvery { dao.getAllGrowths() } returns listOf(GrowthDTO(growthId = 0, initialDate = "15/15/1995", notes = "na", name = "name"),)
 
             val result = repo.getAllGrowths()
 
-            assertEquals(Growth(growthId = 0, initialDate = "15/15/1995", notes = "na", name = "name"), result)
+            assertEquals(listOf(Growth(growthId = 0, initialDate = "15/15/1995", notes = "na", name = "name")), result)
         }
     }
 }

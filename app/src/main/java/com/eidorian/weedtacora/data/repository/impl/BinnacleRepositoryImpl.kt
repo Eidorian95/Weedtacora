@@ -2,7 +2,6 @@ package com.eidorian.weedtacora.data.repository.impl
 
 import com.eidorian.weedtacora.data.dao.GrowthDao
 import com.eidorian.weedtacora.data.entities.Binnacle
-import com.eidorian.weedtacora.data.entities.GrowthWithBinnacle
 import com.eidorian.weedtacora.data.repository.BinnacleRepository
 import javax.inject.Inject
 
@@ -13,9 +12,9 @@ class BinnacleRepositoryImpl @Inject constructor(
         return growthDao.insertBinnacle(binnacle)
     }
 
-    override suspend fun getAllBinnacles(): List<GrowthWithBinnacle> {
+   /* override suspend fun getAllBinnacles(): List<GrowthWithBinnacle> {
         return growthDao.getAllBinnacles()
-    }
+    }*/
 
     override suspend fun getGrowthDetails(growthId: Int): List<Binnacle> {
         return growthDao.getGrowthDetails(growthId)
