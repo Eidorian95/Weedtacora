@@ -42,7 +42,6 @@ class GrowthDetailsViewModelTest {
 
     @Test
     fun `fetch growth details and get empty list`() {
-        viewModel.growthDetails.observeForever(growthDetailsObserver)
         coEvery { useCase.invoke(1) } returns emptyList<Binnacle>()
 
         viewModel.fetchGrowthDetails(1)
@@ -52,7 +51,6 @@ class GrowthDetailsViewModelTest {
 
     @Test
     fun `fetch growth details`() {
-        viewModel.growthDetails.observeForever(growthDetailsObserver)
         coEvery { useCase.invoke(1) } returns listOf(BASE_BINNACLE)
 
         viewModel.fetchGrowthDetails(1)
