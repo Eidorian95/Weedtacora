@@ -38,6 +38,7 @@ import com.eidorian.weedtacora.bussinesslogic.viewmodel.GrowthViewModel
 import com.eidorian.weedtacora.data.entities.Growth
 import com.eidorian.weedtacora.presentation.components.Footer
 import com.eidorian.weedtacora.presentation.navigation.Screen
+import com.eidorian.weedtacora.presentation.uimodel.GrowthUiModel
 
 @Composable
 fun HomeScreen(
@@ -77,21 +78,21 @@ fun HomeScreen(
 }
 
 @Composable
-fun GrowthsList(growthItems: List<Growth>, onClick: (Int) -> Unit) {
+fun GrowthsList(growthItems: List<GrowthUiModel>, onClick: (Int) -> Unit) {
     LazyColumn {
         items(
             items = growthItems,
-            key = { item: Growth -> item.growthId }
+            key = { item: GrowthUiModel -> item.id }
         ) {
             GrowthCard(growth = it) {
-                onClick(it.growthId)
+                onClick(it.id)
             }
         }
     }
 }
 
 @Composable
-fun GrowthCard(growth: Growth, onClick: () -> Unit) {
+fun GrowthCard(growth: GrowthUiModel, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -129,11 +130,13 @@ fun GrowthCard(growth: Growth, onClick: () -> Unit) {
 @Composable
 private fun GrowthCardPreview() {
     GrowthCard(
-        growth = Growth(
+        growth = GrowthUiModel(
             0,
             "15/03/1995",
             "sin notas",
-            "The Flower"
+            "The Flower",
+            "45",
+            "VEG"
         ),
         onClick = { }
     )
@@ -143,11 +146,13 @@ private fun GrowthCardPreview() {
 @Composable
 private fun GrowthCardLongTextPreview() {
     GrowthCard(
-        growth = Growth(
+        growth = GrowthUiModel(
             0,
             "15/03/1995",
             "sin notas",
-            "Silver River Cri-Tropical Haze"
+            "Silver River Cri-Tropical Haze",
+            "45",
+            "VEG"
         ),
         onClick = { }
     )

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.eidorian.weedtacora.bussinesslogic.usecase.GetAllGrowthsUseCase
 import com.eidorian.weedtacora.data.entities.Growth
 import com.eidorian.weedtacora.di.IoDispatcher
+import com.eidorian.weedtacora.presentation.uimodel.GrowthUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.BufferOverflow
@@ -19,8 +20,8 @@ class GrowthViewModel @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val _userGrowths = MutableSharedFlow<List<Growth>>(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
-    val userGrowths: Flow<List<Growth>>
+    private val _userGrowths = MutableSharedFlow<List<GrowthUiModel>>(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    val userGrowths: Flow<List<GrowthUiModel>>
         get() = _userGrowths
 
     init {
