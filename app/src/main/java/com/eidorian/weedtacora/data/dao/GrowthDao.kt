@@ -25,4 +25,7 @@ interface GrowthDao {
     @Transaction
     @Query("SELECT * FROM Binnacle WHERE fk_growth_id = :growthId")
     fun getGrowthDetails(growthId:Int): List<Binnacle>
+
+    @Query("DELETE FROM GrowthDTO WHERE growth_id = :growthId")
+    fun deleteGrowth(growthId:Int)
 }

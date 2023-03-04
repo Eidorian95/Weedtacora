@@ -64,13 +64,15 @@ fun HomeScreen(
         }
     }
 
-    HomeScreenContent(growthList, navController)
+    HomeScreenContent(growthList, navController) { id ->
+        viewModel.onDeleteGrowth(id)
+    }
 
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreenContent(growthList: List<GrowthUiModel>, navController: NavController) {
+fun HomeScreenContent(growthList: List<GrowthUiModel>, navController: NavController, onDeleteGrowth: (id:Int) -> Unit) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
     val isCollapsed by remember { derivedStateOf { scrollBehavior.state.collapsedFraction > 0.5 } }
 
@@ -87,7 +89,7 @@ fun HomeScreenContent(growthList: List<GrowthUiModel>, navController: NavControl
 
     Scaffold(
         topBar = {
-            MediumTopAppBar(
+            LargeTopAppBar(
                 title = {
                     Text(
                         text = "Tus Cultivos",
@@ -96,7 +98,7 @@ fun HomeScreenContent(growthList: List<GrowthUiModel>, navController: NavControl
                     )
                 },
                 scrollBehavior = scrollBehavior,
-                colors = TopAppBarDefaults.mediumTopAppBarColors(
+                colors = TopAppBarDefaults.largeTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     scrolledContainerColor = MaterialTheme.colorScheme.surface,
                     navigationIconContentColor = topAppBarElementColor,
@@ -122,9 +124,11 @@ fun HomeScreenContent(growthList: List<GrowthUiModel>, navController: NavControl
                 items = growthList,
                 key = { item: GrowthUiModel -> item.id }
             ) { growth ->
-                GrowthCard(growth = growth) {
+                GrowthCard(growth = growth, onClick = {
                     navController.navigate(Screen.GrowthDetailsScreen.route.plus("/${growth.id}"))
-                }
+                }, onLongClick = {
+                    onDeleteGrowth(growth.id)
+                })
             }
         }
 
@@ -133,13 +137,13 @@ fun HomeScreenContent(growthList: List<GrowthUiModel>, navController: NavControl
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun GrowthCard(growth: GrowthUiModel, onClick: () -> Unit) {
+fun GrowthCard(growth: GrowthUiModel, onClick: () -> Unit, onLongClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .combinedClickable(
                 onClick = onClick,
-                onLongClick = {}
+                onLongClick = onLongClick
             )
             .padding(vertical = 8.dp),
     ) {

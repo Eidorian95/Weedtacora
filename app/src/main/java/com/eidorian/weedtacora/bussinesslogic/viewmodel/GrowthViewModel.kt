@@ -2,6 +2,7 @@ package com.eidorian.weedtacora.bussinesslogic.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.eidorian.weedtacora.bussinesslogic.usecase.DeleteGrowthUseCase
 import com.eidorian.weedtacora.bussinesslogic.usecase.GetAllGrowthsUseCase
 import com.eidorian.weedtacora.data.entities.Growth
 import com.eidorian.weedtacora.di.IoDispatcher
@@ -17,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GrowthViewModel @Inject constructor(
     private val getAllGrowths: GetAllGrowthsUseCase,
+    private val deleteGrowth: DeleteGrowthUseCase,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -32,6 +34,14 @@ class GrowthViewModel @Inject constructor(
         viewModelScope.launch(context = dispatcher) {
             val result = getAllGrowths()
             _userGrowths.emit(result)
+        }
+    }
+
+    fun onDeleteGrowth(id: Int) {
+        viewModelScope.launch(context = dispatcher) {
+            deleteGrowth(id).run {
+                fetchUserGrowths()
+            }
         }
     }
 

@@ -29,4 +29,8 @@ class GrowthRepositoryImpl @Inject constructor(
             )
         }
     }
+
+    override suspend fun deleteGrowth(growthId: Int) {
+        growthDao.deleteGrowth(growthId)
+    }
 }
