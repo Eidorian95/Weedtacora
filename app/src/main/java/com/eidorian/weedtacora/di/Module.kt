@@ -39,8 +39,10 @@ class Module {
             appContext,
             AppDatabase::class.java,
             "wdd_data_base"
-        ).fallbackToDestructiveMigration()
-            .allowMainThreadQueries().build()
+        )
+            .fallbackToDestructiveMigration()
+            .allowMainThreadQueries()
+            .build()
     }
 
     @Provides

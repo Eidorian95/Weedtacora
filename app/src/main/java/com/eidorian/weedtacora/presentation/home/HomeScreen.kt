@@ -13,9 +13,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -68,6 +70,7 @@ fun HomeScreen(
 fun HomeScreenContent(growthList: List<GrowthUiModel>, navController: NavController) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
     val isCollapsed by remember { derivedStateOf { scrollBehavior.state.collapsedFraction > 0.5 } }
+
     val topAppBarElementColor = if (isCollapsed) {
         MaterialTheme.colorScheme.onSurface
     } else {
@@ -81,10 +84,16 @@ fun HomeScreenContent(growthList: List<GrowthUiModel>, navController: NavControl
 
     Scaffold(
         topBar = {
-            LargeTopAppBar(
-                title = { Text(text = "Tus Cultivos", fontSize = topAppBarTextSize, fontWeight = FontWeight.Bold) },
+            MediumTopAppBar(
+                title = {
+                    Text(
+                        text = "Tus Cultivos",
+                        fontSize = topAppBarTextSize,
+                        fontWeight = FontWeight.Bold
+                    )
+                },
                 scrollBehavior = scrollBehavior,
-                colors = TopAppBarDefaults.largeTopAppBarColors(
+                colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     scrolledContainerColor = MaterialTheme.colorScheme.surface,
                     navigationIconContentColor = topAppBarElementColor,
@@ -94,7 +103,14 @@ fun HomeScreenContent(growthList: List<GrowthUiModel>, navController: NavControl
             )
         },
         floatingActionButton = {
-            //TODO: ADD FLOATING BUTTON FOR NEW GROWTH
+            FloatingActionButton(onClick = {
+                navController.navigate(Screen.CreateGrowthScreen.route)
+            }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_flower_stage),
+                    contentDescription = ""
+                )
+            }
         },
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
     ) { value ->
@@ -102,9 +118,9 @@ fun HomeScreenContent(growthList: List<GrowthUiModel>, navController: NavControl
             items(
                 items = growthList,
                 key = { item: GrowthUiModel -> item.id }
-            ) {
-                GrowthCard(growth = it) {
-                    navController.navigate(Screen.GrowthDetailsScreen.route.plus("/$it"))
+            ) { growthId ->
+                GrowthCard(growth = growthId) {
+                    navController.navigate(Screen.GrowthDetailsScreen.route.plus("/$growthId"))
                 }
             }
         }
