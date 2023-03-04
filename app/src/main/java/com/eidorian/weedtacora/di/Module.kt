@@ -4,10 +4,12 @@ import android.content.Context
 import androidx.room.Room
 import com.eidorian.weedtacora.bussinesslogic.usecase.CreateBinnacleUseCase
 import com.eidorian.weedtacora.bussinesslogic.usecase.CreateGrowthUseCase
+import com.eidorian.weedtacora.bussinesslogic.usecase.DeleteGrowthUseCase
 import com.eidorian.weedtacora.bussinesslogic.usecase.impl.CreateGrowthUseCaseImpl
 import com.eidorian.weedtacora.bussinesslogic.usecase.GetAllGrowthsUseCase
 import com.eidorian.weedtacora.bussinesslogic.usecase.GetGrowthDetailsUseCase
 import com.eidorian.weedtacora.bussinesslogic.usecase.impl.CreateBinnacleUseCaseImpl
+import com.eidorian.weedtacora.bussinesslogic.usecase.impl.DeleteGrowthUseCaseImpl
 import com.eidorian.weedtacora.bussinesslogic.usecase.impl.GetAllGrowthsUseCaseImpl
 import com.eidorian.weedtacora.bussinesslogic.usecase.impl.GetGrowthDetailsUseCaseImpl
 import com.eidorian.weedtacora.data.dao.GrowthDao
@@ -79,4 +81,7 @@ abstract class BindsModule {
 
     @Binds
     abstract fun providesGetGrowthDetailsUseCase(useCase: GetGrowthDetailsUseCaseImpl): GetGrowthDetailsUseCase
+
+    @Binds
+    abstract fun providesDeleteGrowthUseCase(useCase: DeleteGrowthUseCaseImpl): DeleteGrowthUseCase
 }

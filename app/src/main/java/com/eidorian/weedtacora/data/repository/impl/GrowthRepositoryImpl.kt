@@ -10,7 +10,13 @@ class GrowthRepositoryImpl @Inject constructor(
     private val growthDao: GrowthDao
 ) : GrowthRepository {
     override suspend fun insertGrowth(growth: Growth): Long {
-        return growthDao.insertGrowth(GrowthDTO(growthId = 0, initialDate = "", notes = "", name = ""))
+        //TODO: create an extension to map presentation to domain model
+        return growthDao.insertGrowth(GrowthDTO(
+            growthId = growth.growthId,
+            initialDate = growth.initialDate,
+            notes = growth.notes,
+            name = growth.name
+        ))
     }
 
     override suspend fun getAllGrowths(): List<Growth> {
@@ -22,5 +28,9 @@ class GrowthRepositoryImpl @Inject constructor(
                 name = it.name
             )
         }
+    }
+
+    override suspend fun deleteGrowth(growthId: Int) {
+        growthDao.deleteGrowth(growthId)
     }
 }
