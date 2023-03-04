@@ -30,6 +30,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 class Module {
+
+    //TODO: removed fallbackToDestructiveMigration() for release
     @Provides
     @Singleton
     fun provideAppDatabase(@ApplicationContext appContext: Context): AppDatabase {
@@ -37,7 +39,10 @@ class Module {
             appContext,
             AppDatabase::class.java,
             "wdd_data_base"
-        ).allowMainThreadQueries().build()
+        )
+            .fallbackToDestructiveMigration()
+            .allowMainThreadQueries()
+            .build()
     }
 
     @Provides

@@ -4,6 +4,7 @@ import CoroutinesTestRule
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.eidorian.weedtacora.bussinesslogic.usecase.GetAllGrowthsUseCase
 import com.eidorian.weedtacora.data.entities.Growth
+import com.eidorian.weedtacora.presentation.uimodel.GrowthUiModel
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -36,14 +37,14 @@ class GrowthViewModelTest {
     @Test
     fun `fetch user growths and get empty list`() {
         //dada la lista de cultido
-        coEvery { useCase.invoke() } returns emptyList<Growth>()
+        coEvery { useCase.invoke() } returns emptyList<GrowthUiModel>()
 
         //cuando se inicializa el vm se busca la lista
         viewModel = GrowthViewModel(useCase, Dispatchers.Main)
 
         //entonces la lista es
         coroutinesTestRule.runBlockingTest {
-            Assert.assertEquals(emptyList<Growth>(), viewModel.userGrowths.first())
+            Assert.assertEquals(emptyList<GrowthUiModel>(), viewModel.userGrowths.first())
         }
     }
 
@@ -63,6 +64,6 @@ class GrowthViewModelTest {
 
 
     companion object {
-        val BASE_GROWTH = Growth(growthId = 0, initialDate = "23/3/21", notes = "sin notas", name = "primer cultivo")
+        val BASE_GROWTH = GrowthUiModel(id = 0, initialDate = "23/3/21", notes = "sin notas", name = "primer cultivo", "45", "VEG")
     }
 }

@@ -14,12 +14,13 @@ import com.eidorian.weedtacora.bussinesslogic.viewmodel.GrowthViewModel
 import com.eidorian.weedtacora.presentation.CreateBinnacleScreen
 import com.eidorian.weedtacora.presentation.CreateGrowthScreen
 import com.eidorian.weedtacora.presentation.GrowthDetailsScreen
-import com.eidorian.weedtacora.presentation.HomeScreen
+import com.eidorian.weedtacora.presentation.home.HomeScreen
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.HomeScreen.route) {
+
         composable(route = Screen.HomeScreen.route) {
             val viewModel = hiltViewModel<GrowthViewModel>()
             HomeScreen(navController = navController, viewModel = viewModel)
